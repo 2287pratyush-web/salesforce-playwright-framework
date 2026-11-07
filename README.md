@@ -6,7 +6,7 @@ An enterprise-style test automation framework for Salesforce Lightning, built wi
 
 ## Why this exists
 
-Salesforce Lightning is hard to automate reliably: the page structure is generated at run time, IDs change between page loads, components sit inside shadow DOM, and Salesforce ships three releases a year. Scripts built on brittle selectors break often, so many Salesforce teams fall back to manual regression, which is slow, expensive and a release risk. This framework shows how to build UI tests that survive Lightning and releases, and that fit into a CI quality gate.
+Salesforce Lightning is hard to automate reliably: the page structure is generated at run time, IDs change between page loads, components sit inside shadow DOM, and Salesforce ships three releases a year. In nine years of testing Salesforce programmes, I've seen the same pattern: scripts built on brittle selectors break every release, the team stops trusting them, and regression goes back to manual, which is slow, expensive and a release risk. This framework shows how to build UI tests that survive Lightning and releases, and that fit into a CI quality gate.
 
 ## What's in it today
 
