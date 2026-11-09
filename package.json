@@ -1,14 +1,14 @@
 {
   "name": "salesforce-playwright-framework",
   "version": "1.0.0",
-  "description": "",
+  "description": "An enterprise-style test automation framework for Salesforce Lightning, built with Playwright and TypeScript.",
   "main": "index.js",
   "scripts": {
   "test": "playwright test",
   "report": "playwright show-report"
 },
-  "keywords": [],
-  "author": "",
+  "keywords": ["salesforce", "playwright", "typescript", "automation", "testing"],
+  "author": "Pratyush Yadav",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.64.1",
