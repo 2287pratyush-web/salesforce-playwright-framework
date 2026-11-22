@@ -10,11 +10,28 @@ Salesforce Lightning is hard to automate reliably: the page structure is generat
 
 ## What's in it today
 
-- **Login page loads correctly:** opens the Salesforce login page and checks the page title, the Username field and the Log In button are shown.
+**Tests against the public Salesforce login page** (`tests/login-page.spec.ts`)
+
+- **Login page loads correctly:** checks the page title, the Username field and the Log In button are shown.
 - **Forgot password journey:** clicks "Forgot Your Password?" and checks the reset page opens (URL and "Reset Your Password" heading).
-- **Password screen after username:** enters a test username on the login page, clicks "Log In" and checks the Password field appears (found by role and name).
+- **Password screen after username:** enters a test username, clicks "Log In" and checks the Password field appears.
+- **Remember me checkbox:** checks it is unticked by default, ticks it with `.check()` and checks it is ticked.
+
+**Waiting demo on a fake slow page** (`tests/flaky-demo.spec.ts`). This uses a small made-up page that loads slowly, not Salesforce. It shows the fix for flaky waits:
+
+- **Web-first assertion:** `await expect(locator).toBeVisible()` retries until the heading appears, instead of a hard sleep and a one-off `isVisible()` check.
+- **`click()` auto-waits:** the Save button starts disabled; the click waits until it is enabled.
+- **Success message:** after Save, `toHaveText('Record saved')` waits for the late message.
+
+**How the tests are written**
+
 - Locators follow a priority list: role → label → text → test ID → CSS/XPath only as a last resort. We use role and name (`getByRole`), not XPath, because XPath only gives the position of the element (like an address) that can change with page loads and Salesforce releases, which breaks the tests.
-- Screenshots on failure; trace collected on retry.
+- No hard waits (`waitForTimeout`): actions auto-wait and assertions retry.
+
+**Running and evidence**
+
+- A GitHub Actions workflow runs the tests on every pull request.
+- Screenshots and a page snapshot on failure; a trace is recorded on the first retry (locally, run with `--trace on`).
 
 None of the tests logs in, so no credentials are needed yet. Logged-in tests arrive with saved sessions per persona (PW-04).
 
@@ -32,7 +49,8 @@ npm run report          # open the HTML report
 ## Roadmap
 
 - [x] Project set-up and first tests (PW-01)
-- [ ] Lightning locators and shadow DOM (PW-02) - in progress
+- [x] Lightning locators and shadow DOM (PW-02)
+- [ ] Auto-waiting and web-first assertions (PW-03) - in progress: demo done, real Lightning spinners after login (PW-04)
 - [ ] Login once per persona with saved sessions (PW-04)
 - [ ] Page Object Model (PW-05)
 - [ ] Framework structure, fixtures, API test data, CI (PW-07 onwards)
